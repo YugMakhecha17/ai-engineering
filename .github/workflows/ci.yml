@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Python ${{ matrix.python-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Lint (ruff)
+        run: python -m ruff check .
+      - name: Format check (ruff)
+        run: python -m ruff format --check .
+      - name: Type check (mypy)
+        run: >
+          python -m mypy 01-python-foundations 02-data-structures-algorithms
+          03-software-engineering 05-backend-distributed-systems projects scripts benchmarks
+      - name: Evidence register
+        run: python scripts/check_evidence.py
+      - name: Tests
+        run: python -m pytest

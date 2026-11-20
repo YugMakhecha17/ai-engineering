@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-infrastructure-engineering"
+version = "0.1.0"
+description = "An engineering laboratory: from software engineering fundamentals to production-minded AI infrastructure."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+dependencies = []  # Runtime code is stdlib-only by design. See docs/decisions/0002-minimal-toolchain.md.
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+    "mypy>=1.10",
+]
+
+# This repository is a collection of study modules and three projects, not one
+# installable package. Disable setuptools auto-discovery so `pip install -e ".[dev]"`
+# only installs the dev tools.
+[tool.setuptools]
+py-modules = []
+
+# ---------------------------------------------------------------- pytest
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = [
+    "01-python-foundations",
+    "02-data-structures-algorithms",
+    "03-software-engineering",
+    "05-backend-distributed-systems",
+    "projects",
+    "scripts",
+]
+# Flagship project source trees are importable without installation.
+pythonpath = [
+    "projects/01-request-scheduling-engine/src",
+    "projects/02-model-serving-api/src",
+    "projects/03-inference-observability/src",
+]
+addopts = "-ra --strict-markers --strict-config"
+markers = [
+    "slow: tests that take more than ~1 second (deselect with -m 'not slow')",
+]
+
+# ---------------------------------------------------------------- ruff
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = [".venv", "build"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "C4"]
+# UP046/UP047 suggest PEP 695 syntax (`class Foo[T]`). Not adopted yet: TypeVar/Generic is what
+# most documentation and existing codebases use, which matters for a learning repository.
+# Revisit when the code is next reorganised.
+ignore = ["UP046", "UP047"]
+
+[tool.ruff.lint.per-file-ignores]
+# Deliberate anti-patterns are demonstrated in the study modules; each one is
+# annotated in the source with the reason.
+"01-python-foundations/**" = ["B006", "B008", "B023", "E731"]
+
+# ---------------------------------------------------------------- mypy
+[tool.mypy]
+python_version = "3.12"
+strict = true
+check_untyped_defs = true
+mypy_path = [
+    "benchmarks",
+    "projects/01-request-scheduling-engine/src",
+    "projects/02-model-serving-api/src",
+    "projects/03-inference-observability/src",
+]

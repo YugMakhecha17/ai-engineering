@@ -1,0 +1,81 @@
+{
+  "benchmark": "queue-pop",
+  "data_kind": "measured: wall-clock on the recorded machine; not simulated",
+  "recorded_utc": "2026-11-19T07:03:58Z",
+  "command": "benchmarks/queue_pop_benchmark.py",
+  "environment": {
+    "python": "3.12.3",
+    "implementation": "CPython",
+    "platform": "Linux-6.18.44-fc-v653-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "processor": "x86_64",
+    "cpu_count": 1,
+    "gpu": "not used"
+  },
+  "description": "Drain n items from a FIFO queue (build + n removals).",
+  "results": [
+    {
+      "n": 1000,
+      "list_pop0": {
+        "median_s": 4.770300000700445e-05,
+        "min_s": 4.57529999948747e-05,
+        "max_s": 7.931999999755135e-05,
+        "repeats": 5.0
+      },
+      "deque_popleft": {
+        "median_s": 2.0977000019684056e-05,
+        "min_s": 2.084699997340067e-05,
+        "max_s": 2.151899997215878e-05,
+        "repeats": 5.0
+      },
+      "ring_buffer": {
+        "median_s": 0.00038534800000888936,
+        "min_s": 0.00034310799998138464,
+        "max_s": 0.0003951879999704033,
+        "repeats": 5.0
+      }
+    },
+    {
+      "n": 10000,
+      "list_pop0": {
+        "median_s": 0.10094873299999563,
+        "min_s": 0.10072027700005037,
+        "max_s": 0.1330146049999712,
+        "repeats": 5.0
+      },
+      "deque_popleft": {
+        "median_s": 0.0002083270000525772,
+        "min_s": 0.00020181099995397744,
+        "max_s": 0.00021950600000764098,
+        "repeats": 5.0
+      },
+      "ring_buffer": {
+        "median_s": 0.0041909209999744235,
+        "min_s": 0.0041591899999957604,
+        "max_s": 0.004197753000028115,
+        "repeats": 5.0
+      }
+    },
+    {
+      "n": 50000,
+      "list_pop0": {
+        "median_s": 2.656789257000014,
+        "min_s": 2.6228157500000293,
+        "max_s": 2.677280687999996,
+        "repeats": 5.0
+      },
+      "deque_popleft": {
+        "median_s": 0.0011416640000447842,
+        "min_s": 0.0011217999999644235,
+        "max_s": 0.001171363000025849,
+        "repeats": 5.0
+      },
+      "ring_buffer": {
+        "median_s": 0.020090336000009756,
+        "min_s": 0.01996496900000011,
+        "max_s": 0.020228981000002477,
+        "repeats": 5.0
+      }
+    }
+  ]
+}

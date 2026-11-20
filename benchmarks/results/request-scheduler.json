@@ -1,0 +1,71 @@
+{
+  "benchmark": "request-scheduler",
+  "data_kind": "measured: wall-clock on the recorded machine; not simulated",
+  "recorded_utc": "2026-11-19T07:04:03Z",
+  "command": "projects/01-request-scheduling-engine/benchmarks/bench_schedulers.py",
+  "environment": {
+    "python": "3.12.3",
+    "implementation": "CPython",
+    "platform": "Linux-6.18.44-fc-v653-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "processor": "x86_64",
+    "cpu_count": 1,
+    "gpu": "not used"
+  },
+  "description": "Submit n requests, then dispatch all n (no cancellations).",
+  "priority_levels": 10,
+  "seed": 0,
+  "results": [
+    {
+      "n": 1000,
+      "fifo": {
+        "median_s": 0.001701628000034816,
+        "min_s": 0.0016528250000078515,
+        "max_s": 0.00171952099998407,
+        "repeats": 5.0,
+        "us_per_request": 1.701628000034816
+      },
+      "priority": {
+        "median_s": 0.002047974999982216,
+        "min_s": 0.0020165029999930084,
+        "max_s": 0.002087535000043772,
+        "repeats": 5.0,
+        "us_per_request": 2.047974999982216
+      }
+    },
+    {
+      "n": 10000,
+      "fifo": {
+        "median_s": 0.018827015999988816,
+        "min_s": 0.01816924199999903,
+        "max_s": 0.02121115599999257,
+        "repeats": 5.0,
+        "us_per_request": 1.8827015999988816
+      },
+      "priority": {
+        "median_s": 0.02691197399997236,
+        "min_s": 0.024051766999946267,
+        "max_s": 0.028054195999970943,
+        "repeats": 5.0,
+        "us_per_request": 2.691197399997236
+      }
+    },
+    {
+      "n": 100000,
+      "fifo": {
+        "median_s": 0.2599807779999992,
+        "min_s": 0.2542179170000054,
+        "max_s": 0.27060001399996736,
+        "repeats": 5.0,
+        "us_per_request": 2.599807779999992
+      },
+      "priority": {
+        "median_s": 0.5719918240000084,
+        "min_s": 0.5312347930000101,
+        "max_s": 0.6304123159999904,
+        "repeats": 5.0,
+        "us_per_request": 5.719918240000084
+      }
+    }
+  ]
+}
